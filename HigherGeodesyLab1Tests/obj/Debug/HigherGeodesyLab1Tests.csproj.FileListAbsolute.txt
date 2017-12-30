@@ -1,0 +1,10 @@
+C:\Users\Алексей\RiderProjects\HigherGeodesyLab1\HigherGeodesyLab1Tests\bin\Debug\HigherGeodesyLab1Tests.dll
+C:\Users\Алексей\RiderProjects\HigherGeodesyLab1\HigherGeodesyLab1Tests\bin\Debug\HigherGeodesyLab1Tests.pdb
+C:\Users\Алексей\RiderProjects\HigherGeodesyLab1\HigherGeodesyLab1Tests\bin\Debug\HigherGeodesyLab1.exe
+C:\Users\Алексей\RiderProjects\HigherGeodesyLab1\HigherGeodesyLab1Tests\bin\Debug\nunit.framework.dll
+C:\Users\Алексей\RiderProjects\HigherGeodesyLab1\HigherGeodesyLab1Tests\bin\Debug\HigherGeodesyLab1.pdb
+C:\Users\Алексей\RiderProjects\HigherGeodesyLab1\HigherGeodesyLab1Tests\bin\Debug\nunit.framework.xml
+C:\Users\Алексей\RiderProjects\HigherGeodesyLab1\HigherGeodesyLab1Tests\obj\Debug\HigherGeodesyLab1Tests.csprojResolveAssemblyReference.cache
+C:\Users\Алексей\RiderProjects\HigherGeodesyLab1\HigherGeodesyLab1Tests\obj\Debug\HigherGeodesyLab1Tests.csproj.CoreCompileInputs.cache
+C:\Users\Алексей\RiderProjects\HigherGeodesyLab1\HigherGeodesyLab1Tests\obj\Debug\HigherGeodesyLab1Tests.dll
+C:\Users\Алексей\RiderProjects\HigherGeodesyLab1\HigherGeodesyLab1Tests\obj\Debug\HigherGeodesyLab1Tests.pdb
