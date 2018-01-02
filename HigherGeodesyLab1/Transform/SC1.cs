@@ -96,7 +96,7 @@ namespace HigherGeodesyLab1.Transform
         /// <param name="listBlHtoXyz">список геодезических координат точек</param>
         public static void GetValueSc1(List<Ellipsoid> listEllipsoid, List<SC1> listBlHtoXyz)
         {
-            var seq = listBlHtoXyz.Zip(listEllipsoid,
+            var seq = ZipCollections.MyZip(listBlHtoXyz,listEllipsoid,
                 (e, b) => new Tuple<SC1, Ellipsoid>(e, b)); //Объединяем две коллекции
 
             foreach (var tuple in seq)

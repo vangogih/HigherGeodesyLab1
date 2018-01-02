@@ -80,7 +80,7 @@ namespace HigherGeodesyLab1.Transform
         /// <summary>
         /// Константа ро в радианах
         /// </summary>
-        private const double Po = 1;//Math.PI * (206234.8062 / 3600) / 180.0;
+        private const double Po = 1; //Math.PI * (206234.8062 / 3600) / 180.0;
 
         #region Ctor
 
@@ -118,36 +118,36 @@ namespace HigherGeodesyLab1.Transform
 
             List<SC1> newlistSc1 = SelectSecond(listSc1);
 
-            var seq = listSc2Matrix.Zip(newlistSc1, (sc2Matrix, sc1) => new Tuple<SC2, SC1>(sc2Matrix, sc1));
-            var mainseq = seq.Zip(listSc2Expression,
-                (s, s2E) => new Tuple<Tuple<SC2, SC1>, SC2Expression>(s, s2E));
+            IEnumerable<Tuple<SC1, SC2, SC2Expression>> seq =
+                ZipCollections.MyZip(newlistSc1, listSc2Matrix, listSc2Expression,
+                    (first, second, third) => new Tuple<SC1, SC2, SC2Expression>(first, second, third));
 
-            foreach (var t in mainseq)
+            foreach (var t in seq)
             {
-                t.Item2.Name = t.Item1.Item1.Name + " BLH=>SC2";
+                t.Item3.Name = t.Item2.Name + " BLH=>SC2Exp";
 
-                t.Item2.M = GetValueM(t.Item2.ASc2, t.Item2.PowESc2, t.Item1.Item2.B); //формула верна
-                t.Item2.N = GetValueN(t.Item2.ASc2, t.Item2.PowESc2, t.Item1.Item2.B); //формула верна
+                t.Item3.M = GetValueM(t.Item3.ASc2, t.Item3.PowESc2, t.Item1.B); //формула верна
+                t.Item3.N = GetValueN(t.Item3.ASc2, t.Item3.PowESc2, t.Item1.B); //формула верна
 
-                t.Item2.DeltaBSc2 = _getValueDeltaB(t.Item2.M, t.Item2.N, //SC2Expression
-                    t.Item1.Item2.H, t.Item1.Item2.B, t.Item1.Item2.L, //SC1
-                    t.Item2.ASc2, t.Item2.PowESc2, t.Item2.DeltaA, t.Item2.DeltaPowE, //SC2Expression
-                    t.Item1.Item1.Wx, t.Item1.Item1.Wy, t.Item1.Item1.Dm, t.Item1.Item1.Dx, //SC2Matrix
-                    t.Item1.Item1.Dy, t.Item1.Item1.Dz);//формула верна
+                t.Item3.DeltaBSc2 = _getValueDeltaB(t.Item3.M, t.Item3.N, //SC2Expression
+                    t.Item1.H, t.Item1.B, t.Item1.L, //SC1
+                    t.Item3.ASc2, t.Item3.PowESc2, t.Item3.DeltaA, t.Item3.DeltaPowE, //SC2Expression
+                    t.Item2.Wx, t.Item2.Wy, t.Item2.Dm, t.Item2.Dx, //SC2Matrix
+                    t.Item2.Dy, t.Item2.Dz); //формула верна
 
-                t.Item2.DeltaLSc2 = _getValueDeltaL(t.Item2.N, t.Item1.Item2.H, t.Item1.Item2.B, t.Item1.Item2.L,
-                    t.Item2.PowESc2, t.Item1.Item1.Wx, t.Item1.Item1.Wy, t.Item1.Item1.Wz, t.Item1.Item1.Dx,
-                    t.Item1.Item1.Dy);//формула верна
+                t.Item3.DeltaLSc2 = _getValueDeltaL(t.Item3.N, t.Item1.H, t.Item1.B, t.Item1.L,
+                    t.Item3.PowESc2, t.Item2.Wx, t.Item2.Wy, t.Item2.Wz, t.Item2.Dx,
+                    t.Item2.Dy); //формула верна
 
-                t.Item2.DeltaHSc2 = _getValueDeltaH(t.Item2.N, //SC2Expression
-                    t.Item1.Item2.H, t.Item1.Item2.B, t.Item1.Item2.L, //SC1
-                    t.Item2.ASc2, t.Item2.PowESc2, t.Item2.DeltaA, t.Item2.DeltaPowE, //SC2Expression
-                    t.Item1.Item1.Wx, t.Item1.Item1.Wy, t.Item1.Item1.Dm, t.Item1.Item1.Dx, //SC2Matrix
-                    t.Item1.Item1.Dy, t.Item1.Item1.Dz);//формула верна
+                t.Item3.DeltaHSc2 = _getValueDeltaH(t.Item3.N, //SC2Expression
+                    t.Item1.H, t.Item1.B, t.Item1.L, //SC1
+                    t.Item3.ASc2, t.Item3.PowESc2, t.Item3.DeltaA, t.Item3.DeltaPowE, //SC2Expression
+                    t.Item2.Wx, t.Item2.Wy, t.Item2.Dm, t.Item2.Dx, //SC2Matrix
+                    t.Item2.Dy, t.Item2.Dz); //формула верна
 
-                t.Item2.BSc2 = t.Item1.Item2.B + t.Item2.DeltaBSc2;
-                t.Item2.LSc2 = t.Item1.Item2.L + t.Item2.DeltaLSc2;
-                t.Item2.HSc2 = t.Item1.Item2.H + t.Item2.DeltaHSc2;
+                t.Item3.BSc2 = t.Item1.B + t.Item3.DeltaBSc2;
+                t.Item3.LSc2 = t.Item1.L + t.Item3.DeltaLSc2;
+                t.Item3.HSc2 = t.Item1.H + t.Item3.DeltaHSc2;
             }
         }
 
@@ -158,39 +158,39 @@ namespace HigherGeodesyLab1.Transform
 
             List<SC1> newlistSc1 = SelectSecond(listSc1);
 
-            var seq = listSc2Matrix.Zip(newlistSc1, (sc2Matrix, sc1) => new Tuple<SC2, SC1>(sc2Matrix, sc1));
-            var mainseq = seq.Zip(listSc2Expression,
-                (s, s2E) => new Tuple<Tuple<SC2, SC1>, SC2Expression>(s, s2E));
+            IEnumerable<Tuple<SC1, SC2, SC2Expression>> seq =
+                ZipCollections.MyZip(newlistSc1, listSc2Matrix, listSc2Expression,
+                    (first, second, third) => new Tuple<SC1, SC2, SC2Expression>(first, second, third));
 
-            foreach (var t in mainseq)
+            foreach (var t in seq)
             {
-                t.Item2.Name = t.Item2.Name + " BLH=>SC1";
+                t.Item3.Name = t.Item3.Name + " BLH=>SC1";
 
-                t.Item2.M = GetValueM(t.Item2.ASc2, t.Item2.PowESc2, t.Item1.Item2.B);
-                t.Item2.N = GetValueN(t.Item2.ASc2, t.Item2.PowESc2, t.Item1.Item2.B); //t.Item1.Item2.B
+                t.Item3.M = GetValueM(t.Item3.ASc2, t.Item3.PowESc2, t.Item1.B);
+                t.Item3.N = GetValueN(t.Item3.ASc2, t.Item3.PowESc2, t.Item1.B); //t.Item1.B
 
-                t.Item2.DeltaBSc2 = _getValueDeltaB(t.Item2.M, t.Item2.N, //SC2Expression
-                    t.Item1.Item2.H, t.Item1.Item2.B, t.Item1.Item2.L, //SC1
-                    t.Item2.ASc2, t.Item2.PowESc2, t.Item2.DeltaA, t.Item2.DeltaPowE, //SC2Expression
-                    t.Item1.Item1.Wx * -1, t.Item1.Item1.Wy * -1, t.Item1.Item1.Dm * -1,
-                    t.Item1.Item1.Dx * -1, //SC
-                    t.Item1.Item1.Dy * -1, t.Item1.Item1.Dz * -1);
+                t.Item3.DeltaBSc2 = _getValueDeltaB(t.Item3.M, t.Item3.N, //SC2Expression
+                    t.Item1.H, t.Item1.B, t.Item1.L, //SC1
+                    t.Item3.ASc2, t.Item3.PowESc2, t.Item3.DeltaA, t.Item3.DeltaPowE, //SC2Expression
+                    t.Item2.Wx * -1, t.Item2.Wy * -1, t.Item2.Dm * -1,
+                    t.Item2.Dx * -1, //SC
+                    t.Item2.Dy * -1, t.Item2.Dz * -1);
 
-                t.Item2.DeltaLSc2 = _getValueDeltaL(t.Item2.N, t.Item1.Item2.H, t.Item1.Item2.B, t.Item1.Item2.L,
-                    t.Item2.PowESc2, t.Item1.Item1.Wx * -1, t.Item1.Item1.Wy * -1, t.Item1.Item1.Wz * -1,
-                    t.Item1.Item1.Dx * -1,
-                    t.Item1.Item1.Dy * -1);
+                t.Item3.DeltaLSc2 = _getValueDeltaL(t.Item3.N, t.Item1.H, t.Item1.B, t.Item1.L,
+                    t.Item3.PowESc2, t.Item2.Wx * -1, t.Item2.Wy * -1, t.Item2.Wz * -1,
+                    t.Item2.Dx * -1,
+                    t.Item2.Dy * -1);
 
-                t.Item2.DeltaHSc2 = _getValueDeltaH(t.Item2.N, //SC2Expression
-                    t.Item1.Item2.H, t.Item1.Item2.B, t.Item1.Item2.L, //SC1
-                    t.Item2.ASc2, t.Item2.PowESc2, t.Item2.DeltaA, t.Item2.DeltaPowE, //SC2Expression
-                    t.Item1.Item1.Wx * -1, t.Item1.Item1.Wy * -1, t.Item1.Item1.Dm * -1,
-                    t.Item1.Item1.Dx * -1, //SC2
-                    t.Item1.Item1.Dy * -1, t.Item1.Item1.Dz * -1);
+                t.Item3.DeltaHSc2 = _getValueDeltaH(t.Item3.N, //SC2Expression
+                    t.Item1.H, t.Item1.B, t.Item1.L, //SC1
+                    t.Item3.ASc2, t.Item3.PowESc2, t.Item3.DeltaA, t.Item3.DeltaPowE, //SC2Expression
+                    t.Item2.Wx * -1, t.Item2.Wy * -1, t.Item2.Dm * -1,
+                    t.Item2.Dx * -1, //SC2
+                    t.Item2.Dy * -1, t.Item2.Dz * -1);
 
-                t.Item2.BSc2 = t.Item2.BSc2 + t.Item2.DeltaBSc2;
-                t.Item2.LSc2 = t.Item2.LSc2 + t.Item2.DeltaLSc2;
-                t.Item2.HSc2 = t.Item2.HSc2 + t.Item2.DeltaHSc2;
+                t.Item3.BSc2 = t.Item3.BSc2 + t.Item3.DeltaBSc2;
+                t.Item3.LSc2 = t.Item3.LSc2 + t.Item3.DeltaLSc2;
+                t.Item3.HSc2 = t.Item3.HSc2 + t.Item3.DeltaHSc2;
             }
         }
 
@@ -198,7 +198,8 @@ namespace HigherGeodesyLab1.Transform
 
         #region PrivateMethods
 
-        private static void FillingNewCol1to2(List<Ellipsoid> listEllipsoid, List<SC1> listSc1, List<SC2Expression> listSc2Expression)
+        private static void FillingNewCol1to2(List<Ellipsoid> listEllipsoid, List<SC1> listSc1,
+            List<SC2Expression> listSc2Expression)
         {
             for (int i = 0; i < listEllipsoid.Count; i += 2)
                 listSc2Expression.Add(new SC2Expression(listSc1.ElementAt(i).Name,
@@ -208,7 +209,8 @@ namespace HigherGeodesyLab1.Transform
                     Average(listEllipsoid.ElementAt(i + 1).PowE, listEllipsoid.ElementAt(i).PowE)));
         }
 
-        private static void FillingNewCol2to1(List<Ellipsoid> listEllipsoid, List<SC1> listSc1, List<SC2Expression> listSc2Expression)
+        private static void FillingNewCol2to1(List<Ellipsoid> listEllipsoid, List<SC1> listSc1,
+            List<SC2Expression> listSc2Expression)
         {
             for (int i = 0; i < listEllipsoid.Count; i += 2)
                 listSc2Expression.Add(new SC2Expression(listSc1.ElementAt(i).Name,
@@ -264,9 +266,10 @@ namespace HigherGeodesyLab1.Transform
         private static double _getValueDeltaB(double m, double n, double h, double b, double l, double a, double powe,
             double deltaa, double deltapowe, double wx, double wy, double dm, double dx, double dy, double dz)
         {
-            return Po /(m + h) * (n * powe * Math.Sin(b) * Math.Cos(b) * deltaa / a +
-                            (Math.Pow(n, 2) / Math.Pow(a, 2) + 1) * n * Math.Sin(b) * Math.Cos(b) * deltapowe / 2 -
-                            (dx * Math.Cos(l) + dy * Math.Sin(l)) * Math.Sin(b) + dz * Math.Cos(b)) -
+            return Po / (m + h) * (n * powe * Math.Sin(b) * Math.Cos(b) * deltaa / a +
+                                   (Math.Pow(n, 2) / Math.Pow(a, 2) + 1) * n * Math.Sin(b) * Math.Cos(b) * deltapowe /
+                                   2 -
+                                   (dx * Math.Cos(l) + dy * Math.Sin(l)) * Math.Sin(b) + dz * Math.Cos(b)) -
                    wx * Math.Sin(l) * (1 + powe * Math.Cos(2 * b)) +
                    wy * Math.Cos(l) * (1 + powe * Math.Cos(2 * b)) -
                    Po * dm * powe * Math.Sin(b) * Math.Cos(b);
@@ -323,7 +326,7 @@ namespace HigherGeodesyLab1.Transform
         }
 
         #endregion
-        #endregion
 
+        #endregion
     }
 }

@@ -146,49 +146,49 @@ namespace HigherGeodesyLab1.Transform
             //|deltaYo|
             //|deltaZo|
 
-            IEnumerable<Tuple<SC1, SC2>> seq =
-                listSc1.Zip(listParamsSc2, (sc1, sc2) => new Tuple<SC1, SC2>(sc1, sc2));
-            var mainseq = seq.Zip(newlistEllipsoid, (s, ellips) => new Tuple<Tuple<SC1, SC2>, Ellipsoid>(s, ellips));
+            IEnumerable<Tuple<SC1, SC2, Ellipsoid>> seq =
+                ZipCollections.MyZip(listSc1, listParamsSc2, newlistEllipsoid,
+                    (first, second, third) => new Tuple<SC1, SC2, Ellipsoid>(first, second, third));
 
-            foreach (var t in mainseq)
+            foreach (var t in seq)
             {
-                t.Item2.Name = t.Item1.Item1.Name + "=>SC2";
+                t.Item2.Name = t.Item1.Name + "=>SC2";
 
                 //Инициализируем матрицу SC1
-                sc1Matrix.Matr[0, 0] = t.Item1.Item1.X;
-                sc1Matrix.Matr[1, 0] = t.Item1.Item1.Y;
-                sc1Matrix.Matr[2, 0] = t.Item1.Item1.Z;
+                sc1Matrix.Matr[0, 0] = t.Item1.X;
+                sc1Matrix.Matr[1, 0] = t.Item1.Y;
+                sc1Matrix.Matr[2, 0] = t.Item1.Z;
 
                 //Инициализируем матрицу с дельтами
-                deltaMatrix.Matr[0, 0] = t.Item1.Item2.Dx;
-                deltaMatrix.Matr[1, 0] = t.Item1.Item2.Dy;
-                deltaMatrix.Matr[2, 0] = t.Item1.Item2.Dz;
+                deltaMatrix.Matr[0, 0] = t.Item2.Dx;
+                deltaMatrix.Matr[1, 0] = t.Item2.Dy;
+                deltaMatrix.Matr[2, 0] = t.Item2.Dz;
 
                 //Инициализируем матрицу параметров трансформирования
                 paramsTransformMatrix.Matr[0, 0] = 1; //строка, столбец
-                paramsTransformMatrix.Matr[0, 1] = t.Item1.Item2.Wz;
-                paramsTransformMatrix.Matr[0, 2] = t.Item1.Item2.Wy * -1;
+                paramsTransformMatrix.Matr[0, 1] = t.Item2.Wz;
+                paramsTransformMatrix.Matr[0, 2] = t.Item2.Wy * -1;
                 //=
-                paramsTransformMatrix.Matr[1, 0] = t.Item1.Item2.Wz * -1;
+                paramsTransformMatrix.Matr[1, 0] = t.Item2.Wz * -1;
                 paramsTransformMatrix.Matr[1, 1] = 1;
-                paramsTransformMatrix.Matr[1, 2] = t.Item1.Item2.Wx;
+                paramsTransformMatrix.Matr[1, 2] = t.Item2.Wx;
                 //=
-                paramsTransformMatrix.Matr[2, 0] = t.Item1.Item2.Wy;
-                paramsTransformMatrix.Matr[2, 1] = t.Item1.Item2.Wx * -1;
+                paramsTransformMatrix.Matr[2, 0] = t.Item2.Wy;
+                paramsTransformMatrix.Matr[2, 1] = t.Item2.Wx * -1;
                 paramsTransformMatrix.Matr[2, 2] = 1;
 
-                sc2Matrix = (1 + t.Item1.Item2.Dm) * paramsTransformMatrix * sc1Matrix + deltaMatrix;
+                sc2Matrix = (1 + t.Item2.Dm) * paramsTransformMatrix * sc1Matrix + deltaMatrix;
 
-                t.Item1.Item2.X = sc2Matrix.Matr[0, 0];
-                t.Item1.Item2.Y = sc2Matrix.Matr[1, 0];
-                t.Item1.Item2.Z = sc2Matrix.Matr[2, 0];
+                t.Item2.X = sc2Matrix.Matr[0, 0];
+                t.Item2.Y = sc2Matrix.Matr[1, 0];
+                t.Item2.Z = sc2Matrix.Matr[2, 0];
 
-                t.Item1.Item2._d = GetValueD(t.Item1.Item2.X, t.Item1.Item2.Y);
+                t.Item2._d = GetValueD(t.Item2.X, t.Item2.Y);
 
-                t.Item1.Item2.B = Iteration(t.Item1.Item2.X, t.Item1.Item2.Y, t.Item1.Item2.Z, t.Item2.PowE, t.Item2.A);
-                t.Item1.Item2.L = GetValueL(t.Item1.Item2.Y, t.Item1.Item2._d);
-                t.Item1.Item2.H = GetValueH(t.Item1.Item2._d, t.Item1.Item2.B, t.Item1.Item2.Z, t.Item2.A,
-                    t.Item2.PowE);
+                t.Item2.B = Iteration(t.Item2.X, t.Item2.Y, t.Item2.Z, t.Item3.PowE, t.Item3.A);
+                t.Item2.L = GetValueL(t.Item2.Y, t.Item2._d);
+                t.Item2.H = GetValueH(t.Item2._d, t.Item2.B, t.Item2.Z, t.Item3.A,
+                    t.Item3.PowE);
             }
         }
 

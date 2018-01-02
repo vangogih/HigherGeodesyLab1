@@ -9,6 +9,7 @@
           <e p="GeneralFunctionality.cs" t="Include" />
           <e p="Matrix.cs" t="Include" />
           <e p="SaveRead.cs" t="Include" />
+          <e p="ZipCollections.cs" t="Include" />
         </e>
         <e p="HigherGeodesyLab1.csproj" t="IncludeRecursive" />
         <e p="Main.cs" t="Include" />

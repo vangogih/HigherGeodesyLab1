@@ -36,6 +36,7 @@
     <Reference Include="MathMod, Version=1.0.6072.21526, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\MathMod\MathMod.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Build.Tasks.v4.0" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -47,6 +48,7 @@
     <Compile Include="Helper\GeneralFunctionality.cs" />
     <Compile Include="Helper\Matrix.cs" />
     <Compile Include="Helper\SaveRead.cs" />
+    <Compile Include="Helper\ZipCollections.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Transform\Elipsoid.cs" />
     <Compile Include="Transform\SC1.cs" />

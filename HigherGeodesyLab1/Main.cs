@@ -30,11 +30,6 @@ namespace HigherGeodesyLab1
             var listSc2Expression = new List<SC2Expression>();
             SC2Expression.Blh1ToBlh2(listParamsEllipsoids, listSc1, listSc2, listSc2Expression);
             listSc2Expression.Save("TransformedBlhSC1toSC2.txt");
-            #region Don'tWork
-//            ===================Преобразование из СК2 в СК1 BLH=====================проверка
-//            SC2Expression.Blh2ToBlh1(listParamsEllipsoids, listSc1, listSc2, listSc2Expression);
-//            listSc2Expression.Save("TransformedBlhSC2toSC1.txt");
-            #endregion
             Console.WriteLine($"{DateTime.Now - start}");
         }
     }
