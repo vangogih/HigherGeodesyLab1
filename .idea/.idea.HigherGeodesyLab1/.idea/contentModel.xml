@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\Алексей\.Rider2017.3\system\resharper-host\local\Transient\ReSharperHost\v11\SolutionCaches\_HigherGeodesyLab1.-1565275312.00" t="ExcludeRecursive" />
-    <e p="C:\Users\Алексей\RiderProjects\HigherGeodesyLab1" t="IncludeFlat">
+    <e p="C:\Users\vango\.Rider2018.2\config\scratches" t="IncludeRecursive" />
+    <e p="C:\Users\vango\.Rider2018.2\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\vango\.Rider2018.2\system\resharper-host\local\Transient\ReSharperHost\v182\SolutionCaches\_HigherGeodesyLab1.380137322.00" t="ExcludeRecursive" />
+    <e p="D:\RiderProjects\HigherGeodesyLab1" t="IncludeFlat">
       <e p="HigherGeodesyLab1" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
         <e p="Helper" t="Include">

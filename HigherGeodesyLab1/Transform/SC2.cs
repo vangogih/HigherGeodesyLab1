@@ -110,7 +110,7 @@ namespace HigherGeodesyLab1.Transform
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Параметр Wx или Wy или Wz: {e}");
+//                Console.WriteLine($"Параметр Wx или Wy или Wz: {e}");
                 throw;
             }
         }

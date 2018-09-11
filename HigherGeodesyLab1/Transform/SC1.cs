@@ -57,6 +57,7 @@ namespace HigherGeodesyLab1.Transform
         private static double _n;
 
         private double _d;
+        private double _r;
 
         #region Ctor
 
@@ -85,6 +86,17 @@ namespace HigherGeodesyLab1.Transform
             }
         }
 
+        /// <summary>
+        /// Пользщовательский конструктор прямоугольных координат
+        /// </summary>
+        public SC1(string name, string _x, string _y, string _z)
+        {
+            Name = name;
+            X = TryParse(_x);
+            Y = TryParse(_y);
+            Z = TryParse(_z);
+        }
+
         #endregion
 
         #region TransformMethod
@@ -94,9 +106,9 @@ namespace HigherGeodesyLab1.Transform
         /// </summary>
         /// <param name="listEllipsoid">список с параметрами элипсоида</param>
         /// <param name="listBlHtoXyz">список геодезических координат точек</param>
-        public static void GetValueSc1(List<Ellipsoid> listEllipsoid, List<SC1> listBlHtoXyz)
+        public static void GetBlhXyzFromCloseBlhSc1(List<Ellipsoid> listEllipsoid, List<SC1> listBlHtoXyz)
         {
-            var seq = ZipCollections.MyZip(listBlHtoXyz,listEllipsoid,
+            var seq = ZipCollections.MyZip(listBlHtoXyz, listEllipsoid,
                 (e, b) => new Tuple<SC1, Ellipsoid>(e, b)); //Объединяем две коллекции
 
             foreach (var tuple in seq)
@@ -110,14 +122,70 @@ namespace HigherGeodesyLab1.Transform
                 tuple.Item1._d = GetValueD(tuple.Item1.X, tuple.Item1.Y);
 
                 tuple.Item1.B = Iteration(tuple.Item1.X, tuple.Item1.Y, tuple.Item1.Z, tuple.Item2.PowE, tuple.Item2.A);
-                tuple.Item1.L = GetValueL(tuple.Item1.Y,tuple.Item1._d);
+                tuple.Item1.L = GetValueL(tuple.Item1.Y, tuple.Item1._d);
                 tuple.Item1.H = GetValueH(tuple.Item1._d, tuple.Item1.B, tuple.Item1.Z, tuple.Item2.A,
                     tuple.Item2.PowE);
             }
         }
+
+        public static void GetBlhFromXyzIteration(List<Ellipsoid> ellipsoids, List<SC1> sc1s)
+        {
+            var seq = ZipCollections.MyZip(sc1s, ellipsoids,
+                (e, b) => new Tuple<SC1, Ellipsoid>(e, b));
+
+            foreach (Tuple<SC1, Ellipsoid> tuple in seq)
+            {
+                tuple.Item1.Name = tuple.Item1.Name + "XYZ=>BLH";
+
+                tuple.Item1._d = GetValueD(tuple.Item1.X, tuple.Item1.Y);
+
+                tuple.Item1.B = Iteration(tuple.Item1.X, tuple.Item1.Y, tuple.Item1.Z, tuple.Item2.PowE, tuple.Item2.A);
+                tuple.Item1.L = GetValueL(tuple.Item1.Y, tuple.Item1._d);
+                tuple.Item1.H = GetValueH(tuple.Item1._d, tuple.Item1.B, tuple.Item1.Z, tuple.Item2.A,
+                    tuple.Item2.PowE);
+            }
+        }
+
+        public static void GEtBlhFromXyzBouring1(List<Ellipsoid> ellipsoids, List<SC1> sc1s)
+        {
+            var seq = ZipCollections.MyZip(sc1s, ellipsoids,
+                (e, b) => new Tuple<SC1, Ellipsoid>(e, b));
+
+            foreach (Tuple<SC1, Ellipsoid> tuple in seq)
+            {
+                tuple.Item1._d = GetValueD(tuple.Item1.X, tuple.Item1.Y); //Q
+                tuple.Item1._r = GetValueRBouring(tuple.Item2.PowE, tuple.Item1.X, tuple.Item1.Y, tuple.Item1.Z);
+
+                tuple.Item1.B =
+                    GetValueBBouring1(tuple.Item2.PowE, tuple.Item2.PowEAmp, tuple.Item1.Z, tuple.Item1._d,
+                        tuple.Item2.B, tuple.Item1._r);
+                tuple.Item1.L = GetValueL(tuple.Item1.Y, tuple.Item1._d);
+                tuple.Item1.H = GetValueHBouring(tuple.Item1._d, tuple.Item1.B, tuple.Item1.Z, tuple.Item2.A,
+                    tuple.Item2.PowE);
+            }
+        }
+
+        public static void GEtBlhFromXyzBouring2(List<Ellipsoid> ellipsoids, List<SC1> sc1s)
+        {
+            var seq = ZipCollections.MyZip(sc1s, ellipsoids,
+                (e, b) => new Tuple<SC1, Ellipsoid>(e, b));
+
+            foreach (Tuple<SC1, Ellipsoid> tuple in seq)
+            {
+                tuple.Item1._d = GetValueD(tuple.Item1.X, tuple.Item1.Y); //Q
+
+                tuple.Item1.L = GetVAlueUBouring2(tuple.Item1.Z, tuple.Item1._d, tuple.Item2.PowE);
+                tuple.Item1.B = GetValueBBouring2(tuple.Item1.Z, tuple.Item1._d, tuple.Item2.PowE, tuple.Item2.A,
+                    tuple.Item1.L);
+                tuple.Item1.H = GetValueHBouring(tuple.Item1._d, tuple.Item1.B, tuple.Item1.Z, tuple.Item2.A,
+                    tuple.Item2.PowE);
+            }
+        }
+
         #endregion
 
         #region MathMethods
+
         /// <summary>
         /// Метод для получения значения кривизны первого вертикала
         /// </summary>
@@ -160,6 +228,25 @@ namespace HigherGeodesyLab1.Transform
         /// <returns>Значение в градусах</returns>
         public static readonly Func<double, double, double, double, double> GetValueZ = (powe, n, h, b) =>
             ((1 - powe) * n + h) * Math.Sin(b);
+
+        private static readonly Func<double, double, double, double, double, double, double> GetValueBBouring1 =
+            (powe, poweAmp, z, q, b, r) => Math.Atan(z / q *
+                                                     ((Math.Pow(r, 3) + b * poweAmp * Math.Pow(z, 2)) /
+                                                     (Math.Pow(r, 3) - b * powe * (1 - powe) * Math.Pow(q, 2))));
+
+        private static readonly Func<double, double, double, double, double, double> GetValueBBouring2 =
+            (z, q, powe, a, u) => Math.Atan((z + powe * a * Math.Pow(Math.Sin(u), 3) / Math.Sqrt(1 - powe))
+                                            / (q - powe * a * Math.Pow(Math.Cos(u), 3)));
+
+        private static readonly Func<double, double, double, double, double> GetValueRBouring =
+            (powe, x, y, z) => Math.Sqrt(Math.Pow(z, 2) + (Math.Pow(x, 2) + Math.Pow(y, 2)) * (1 - powe));
+
+        private static readonly Func<double, double, double, double, double, double> GetValueHBouring =
+            (q, b, z, a, powe) =>
+                q * Math.Cos(b) + z * Math.Sin(b) - a * Math.Sqrt(1 - powe * Math.Pow(Math.Sin(b), 2));
+
+        private static readonly Func<double, double, double, double> GetVAlueUBouring2 =
+            (z, q, powe) => Math.Atan(z / q * Math.Sqrt(1 - powe));
 
         #endregion
     }

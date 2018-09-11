@@ -8,7 +8,6 @@ namespace HigherGeodesyLab1.Helper
     /// </summary>
     internal sealed class Matrix
     {
-        // Скрытые поля
         private int _col;
 
         private int _row;
@@ -22,7 +21,8 @@ namespace HigherGeodesyLab1.Helper
         /// </summary>
         public int Col
         {
-            get => _col;
+            get { return _col;}
+            
             set
             {
                 if (value > 0) _col = value;
@@ -34,7 +34,7 @@ namespace HigherGeodesyLab1.Helper
         /// </summary>
         public int Row
         {
-            get => _row;
+            get { return _row;}
             set
             {
                 if (value > 0) _row = value;
@@ -58,14 +58,14 @@ namespace HigherGeodesyLab1.Helper
         }
 
         /// <summary>
-        /// Позволяем обращаться к матрице как к массиву (в плане синтаксиса)
+        /// индексатор матрицы
         /// </summary>
         /// <param name="i">Кол-во строк</param>
         /// <param name="j">Кол-во столбцов</param>
         public double this[int i, int j]
         {
-            get => _matrix[i, j];
-            set => _matrix[i, j] = value;
+            get { return _matrix[i, j];}
+            set { _matrix[i, j] = value;}
         }
 
         #endregion

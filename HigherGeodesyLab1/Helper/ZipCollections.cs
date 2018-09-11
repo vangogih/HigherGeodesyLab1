@@ -37,11 +37,11 @@ namespace HigherGeodesyLab1.Helper
             Func<TFirst, TSecond, TResult> resultSelector)
         {
             if (first == null)
-                throw new ArgumentException(nameof(first));
+                throw new ArgumentException(first.ToString());
             if (second == null)
-                throw new ArgumentException(nameof(second));
+                throw new ArgumentException(second.ToString());
             if (resultSelector == null)
-                throw new ArgumentException(nameof(resultSelector));
+                throw new ArgumentException(resultSelector.ToString());
             return ZipIterator(first, second, resultSelector);
         }
 
@@ -66,13 +66,13 @@ namespace HigherGeodesyLab1.Helper
             Func<TFirst, TSecond, TThird, TResult> resultSelector)
         {
             if (first == null)
-                throw new ArgumentException(nameof(first));
+                throw new ArgumentException(first.ToString());
             if (second == null)
-                throw new ArgumentException(nameof(second));
+                throw new ArgumentException(second.ToString());
             if (third == null)
-                throw new ArgumentException(nameof(third));
+                throw new ArgumentException(third.ToString());
             if (resultSelector == null)
-                throw new ArgumentException(nameof(resultSelector));
+                throw new ArgumentException(resultSelector.ToString());
             return ZipIterator(first, second, third, resultSelector);
         }
 
@@ -100,15 +100,15 @@ namespace HigherGeodesyLab1.Helper
             Func<TFirst, TSecond, TThird, TFourth, TResult> resultSelector)
         {
             if (first == null)
-                throw new ArgumentException(nameof(first));
+                throw new ArgumentException(first.ToString());
             if (second == null)
-                throw new ArgumentException(nameof(second));
+                throw new ArgumentException(second.ToString());
             if (third == null)
-                throw new ArgumentException(nameof(third));
+                throw new ArgumentException(third.ToString());
             if (fourth == null)
-                throw new ArgumentException(nameof(fourth));
+                throw new ArgumentException(fourth.ToString());
             if (resultSelector == null)
-                throw new ArgumentException(nameof(resultSelector));
+                throw new ArgumentException(resultSelector.ToString());
             return ZipIterator(first, second, third, fourth, resultSelector);
         }
 

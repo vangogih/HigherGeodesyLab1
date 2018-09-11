@@ -34,12 +34,13 @@ namespace HigherGeodesyLab1.Helper
                                 read[7]));
                         }
                     }
+
                     sr.Close();
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Ошибка ввода/вывода: {e}");
+//                Console.WriteLine($"Ошибка ввода/вывода: {0}", e);
                 throw;
             }
         }
@@ -55,7 +56,8 @@ namespace HigherGeodesyLab1.Helper
             {
                 dataList.ForEach(item =>
                     fs.WriteLine(
-                        $"{item.Name}|a={item.A:F2}|b={item.B:F2}|alf={item.Alf:F5}|e={item.E:F5}|e'={item.EAmp:F5}|e^2={item.PowE:F5}|e'^2={item.PowEAmp:F5}"));
+                        "{0}|a={1}|b={2}|alf={3}|e={4}|e'={5}|e^2={6}|e'^2={7}", item.Name, item.A, item.B, item.Alf,
+                        item.E, item.EAmp, item.PowE, item.PowEAmp));
                 fs.Close();
             }
         }
@@ -64,7 +66,7 @@ namespace HigherGeodesyLab1.Helper
 
         #region ReadSaveSC1
 
-        public static void Read(this List<SC1> dataList, string fileName)
+        public static void ReadForBLH(this List<SC1> dataList, string fileName)
         {
             try
             {
@@ -79,12 +81,39 @@ namespace HigherGeodesyLab1.Helper
                             dataList.Add(new SC1(read[0], read[1], read[2], read[3], read[4], read[5]));
                         }
                     }
+
                     sr.Close();
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Ошибка ввода/вывода: {e}");
+//                Console.WriteLine($"Ошибка ввода/вывода: {0}", e);
+                throw;
+            }
+        }
+
+        public static void ReadForXYZ(this List<SC1> dataList, string fileName)
+        {
+            try
+            {
+                using (var sr = new StreamReader(fileName))
+                {
+                    while (!sr.EndOfStream)
+                    {
+                        var readLine = sr.ReadLine();
+                        if (readLine != null)
+                        {
+                            var read = readLine.Split(';'); //name,X,Y,Z
+                            dataList.Add(new SC1(read[0], read[1], read[2], read[3]));
+                        }
+                    }
+
+                    sr.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Ошибка ввода/вывода: {0}", e);
                 throw;
             }
         }
@@ -99,11 +128,10 @@ namespace HigherGeodesyLab1.Helper
                 foreach (var tuple in seq)
                 {
                     fs.WriteLine(
-                        $"{tuple.Item1.Name}|B={tuple.Item1.B:F15}|L={tuple.Item1.L:F15}|H={tuple.Item1.H:F15}|X={tuple.Item1.X:F5}|Y={tuple.Item1.Y:F5}|Z={tuple.Item1.Z:F5}|A={tuple.Item2.A}|PowE={tuple.Item2.PowE}");
+                        "{0}|B={1:F15}|L={2:F15}|H={3:F15}|X={4:F5}|Y={5:F5}|Z={6:F5}", tuple.Item1.Name, tuple.Item1.B,
+                        tuple.Item1.L, tuple.Item1.H, tuple.Item1.X, tuple.Item1.Y, tuple.Item1.Z);
                 }
-//                seq.ForEach(item =>
-//                    fs.WriteLine(
-//                        $"{item.Name}|B={item.B:F5}|L={item.L:F5}|H={item.H:F5}|X={item.X:F5}|Y={item.Y:F5}|Z={item.Z:F5}"));
+
                 fs.Close();
             }
         }
@@ -128,21 +156,23 @@ namespace HigherGeodesyLab1.Helper
                                 read[7]));
                         }
                     }
+
                     sr.Close();
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Ошибка ввода/вывода: {e}");
+//                Console.WriteLine($"Ошибка ввода/вывода: {e}");
                 throw;
             }
         }
 
-        public static void Save(this List<SC2> dataList,List<Ellipsoid> listEllipdoid, string fileName)
+        public static void Save(this List<SC2> dataList, List<Ellipsoid> listEllipdoid, string fileName)
         {
             List<Ellipsoid> newlistEllipsoid = new List<Ellipsoid>();
             for (int i = 0; i < listEllipdoid.Count; i++)
-                if (i % 2 != 0) newlistEllipsoid.Add(listEllipdoid[i]);
+                if (i % 2 != 0)
+                    newlistEllipsoid.Add(listEllipdoid[i]);
 
             IEnumerable<Tuple<SC2, Ellipsoid>> seq =
                 dataList.Zip(newlistEllipsoid, (sc1, sc2) => new Tuple<SC2, Ellipsoid>(sc1, sc2));
@@ -153,6 +183,7 @@ namespace HigherGeodesyLab1.Helper
                     fs.WriteLine(
                         $"{tuple.Item1.Name}|B={tuple.Item1.B:F15}|L={tuple.Item1.L:F8}|H={tuple.Item1.H:F8}|X={tuple.Item1.X:F5}|Y={tuple.Item1.Y:F5}|Z={tuple.Item1.Z:F5}|A={tuple.Item2.A}|PowE={tuple.Item2.PowE}");
                 }
+
                 fs.Close();
             }
         }
@@ -161,12 +192,13 @@ namespace HigherGeodesyLab1.Helper
         {
             using (var fs = new StreamWriter(fileName))
             {
-                dataList.ForEach(item =>
-                    fs.WriteLine(
-                        $"{item.Name}|Bsc2={item.BSc2:F15}|Lsc2={item.LSc2:F8}|Hsc2={item.HSc2:F5}"));
+//                dataList.ForEach(item =>
+//                    fs.WriteLine(
+//                        $"{item.Name}|Bsc2={item.BSc2:F15}|Lsc2={item.LSc2:F8}|Hsc2={item.HSc2:F5}"));
                 fs.Close();
             }
         }
+
         #endregion
     }
 }

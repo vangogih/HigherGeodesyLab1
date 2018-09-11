@@ -6,3 +6,11 @@ C:\Users\Алексей\RiderProjects\HigherGeodesyLab1\HigherGeodesyLab1\obj\De
 C:\Users\Алексей\RiderProjects\HigherGeodesyLab1\HigherGeodesyLab1\obj\Debug\HigherGeodesyLab1.pdb
 C:\Users\Алексей\RiderProjects\HigherGeodesyLab1\HigherGeodesyLab1\bin\Debug\MathMod.dll
 C:\Users\Алексей\RiderProjects\HigherGeodesyLab1\HigherGeodesyLab1\bin\Debug\MathMod.xml
+D:\RiderProjects\HigherGeodesyLab1\HigherGeodesyLab1\obj\Debug\HigherGeodesyLab1.exe
+D:\RiderProjects\HigherGeodesyLab1\HigherGeodesyLab1\obj\Debug\HigherGeodesyLab1.pdb
+D:\RiderProjects\HigherGeodesyLab1\HigherGeodesyLab1\obj\Debug\HigherGeodesyLab1.csprojResolveAssemblyReference.cache
+D:\RiderProjects\HigherGeodesyLab1\HigherGeodesyLab1\bin\Debug\HigherGeodesyLab1.exe
+D:\RiderProjects\HigherGeodesyLab1\HigherGeodesyLab1\bin\Debug\HigherGeodesyLab1.pdb
+D:\RiderProjects\HigherGeodesyLab1\HigherGeodesyLab1\bin\Debug\MathMod.dll
+D:\RiderProjects\HigherGeodesyLab1\HigherGeodesyLab1\bin\Debug\MathMod.xml
+D:\RiderProjects\HigherGeodesyLab1\HigherGeodesyLab1\obj\Debug\HigherGeodesyLab1.csproj.CoreCompileInputs.cache

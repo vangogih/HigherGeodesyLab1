@@ -82,7 +82,7 @@ namespace HigherGeodesyLab1.Transform
         /// Основной метод определяющий все параметры элипсоида из исходных данных
         /// </summary>
         /// <param name="dataList">Коллекция с параметрами элипсоида</param>
-        public static void Transform(List<Ellipsoid> dataList)
+        public static void CalculateParamsEllipsoid(List<Ellipsoid> dataList)
         {
             foreach (var item in dataList)
             {
