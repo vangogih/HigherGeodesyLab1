@@ -1,0 +1,8 @@
+.vs/
+.idea/
+/*.userprefs
+/*.csproj
+/*.pidb
+*.pidb.meta
+/*.suo
+/*.sln*
