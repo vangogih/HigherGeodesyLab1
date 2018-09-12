@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\vango\.Rider2017.3\system\resharper-host\local\Transient\ReSharperHost\v11\SolutionCaches\_HigherGeodesyLab1.-108515365.00" t="ExcludeRecursive" />
+    <e p="D:\RiderProjects\HigherGeodesyLab1\HigherGeodesyLab1" t="IncludeRecursive">
+      <e p="bin" t="ExcludeRecursive" />
+      <e p="Helper" t="Include">
+        <e p="GeneralFunctionality.cs" t="Include" />
+        <e p="Matrix.cs" t="Include" />
+        <e p="SaveRead.cs" t="Include" />
+        <e p="ZipCollections.cs" t="Include" />
+      </e>
+      <e p="HigherGeodesyLab1.csproj" t="IncludeRecursive" />
+      <e p="HigherGeodesyLab1.sln" t="IncludeFlat" />
+      <e p="Main.cs" t="Include" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="Properties" t="Include" />
+      <e p="Transform" t="Include">
+        <e p="Elipsoid.cs" t="Include" />
+        <e p="SC1.cs" t="Include" />
+        <e p="SC2.cs" t="Include" />
+        <e p="SC2Expression.cs" t="Include" />
+        <e p="Topocentric.cs" t="Include" />
+      </e>
+    </e>
+  </component>
+</project>
