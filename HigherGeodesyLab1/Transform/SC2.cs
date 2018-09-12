@@ -58,11 +58,13 @@ namespace HigherGeodesyLab1.Transform
         /// Координата X в системе SC2
         /// </summary>
         public double X { get; private set; }
+        public double GaussX { get;  set; }
 
         /// <summary>
         /// Координата Y в системе SC2
         /// </summary>
         public double Y { get; private set; }
+        public double GaussY { get;  set; }
 
         /// <summary>
         /// Координата Z в системе SC2
@@ -88,6 +90,9 @@ namespace HigherGeodesyLab1.Transform
 
         public double _d;
         public double _r;
+
+        public int Zone;
+        public double RangeL;
 
         #endregion
 
@@ -192,6 +197,18 @@ namespace HigherGeodesyLab1.Transform
 //                    t.Item3.PowE);
 
                 DifferentTransform.GetBlhFromXyz(TransformType.Iterarion, listEllipsoid, listParamsSc2);
+            }
+        }
+
+        public static void GetGauss(List<SC2> listParamsSc2)
+        {
+            var gaussclass = new GaussProjection();
+            foreach (var sc2 in listParamsSc2)
+            {
+                sc2.Zone = gaussclass.NumberSixDegreesZone(sc2.L);
+                sc2.RangeL = gaussclass.GetValueRangeL(sc2.L, sc2.Zone);
+                sc2.GaussX = gaussclass.GetValueXGaussProjection(sc2.B, sc2.RangeL);
+                sc2.GaussY = gaussclass.GetValueYGaussProjection(sc2.Zone, sc2.B, sc2.RangeL);
             }
         }
 

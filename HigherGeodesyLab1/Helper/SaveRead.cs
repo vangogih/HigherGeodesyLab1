@@ -98,7 +98,7 @@ namespace HigherGeodesyLab1.Helper
             {
                 dataList.Clear();
             }
-            
+
             try
             {
                 using (var sr = new StreamReader(fileName))
@@ -157,7 +157,7 @@ namespace HigherGeodesyLab1.Helper
                         if (readLine != null)
                         {
                             var read = readLine.Split(';'); //name,dx,dy,dz,wx,wy,wz,dm
-                            dataList.Add(new SC2(read[0], read[1], read[2], read[3], read[4], read[5], read[6],
+                            dataList.Insert(0, new SC2(read[0], read[1], read[2], read[3], read[4], read[5], read[6],
                                 read[7]));
                         }
                     }
@@ -181,13 +181,16 @@ namespace HigherGeodesyLab1.Helper
 
             var seq = ZipCollections.MyZip(dataList, listEllipdoid,
                 (e, b) => new Tuple<SC2, Ellipsoid>(e, b));
-            
+
             using (var fs = new StreamWriter(fileName))
             {
                 foreach (var tuple in seq)
                 {
                     fs.WriteLine(
-                        $"{tuple.Item1.Name}|B={tuple.Item1.B:F15}|L={tuple.Item1.L:F8}|H={tuple.Item1.H:F8}|X={tuple.Item1.X:F5}|Y={tuple.Item1.Y:F5}|Z={tuple.Item1.Z:F5}|A={tuple.Item2.A}|PowE={tuple.Item2.PowE}");
+                        $"{tuple.Item1.Name}|B={tuple.Item1.B:F15}|L={tuple.Item1.L:F8}" +
+                        $"|H={tuple.Item1.H:F8}|X={tuple.Item1.X:F5}|Y={tuple.Item1.Y:F5}" +
+                        $"|Z={tuple.Item1.Z:F5}|GaussX={tuple.Item1.GaussX}|GaussY={tuple.Item1.GaussY}" +
+                        $"|A={tuple.Item2.A}|PowE={tuple.Item2.PowE}");
                 }
 
                 fs.Close();
