@@ -48,13 +48,16 @@
     <Compile Include="Helper\GeneralFunctionality.cs" />
     <Compile Include="Helper\Matrix.cs" />
     <Compile Include="Helper\SaveRead.cs" />
+    <Compile Include="Helper\TransformType.cs" />
     <Compile Include="Helper\ZipCollections.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Transform\Elipsoid.cs" />
+    <Compile Include="Transform\GaussProjection.cs" />
     <Compile Include="Transform\SC1.cs" />
     <Compile Include="Transform\SC2Expression.cs" />
     <Compile Include="Transform\SC2.cs" />
     <Compile Include="Transform\Topocentric.cs" />
+    <Compile Include="Transform\DifferentTransform.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties" />

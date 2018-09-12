@@ -122,6 +122,11 @@ namespace HigherGeodesyLab1.Helper
         /// <param name="sec">Количество секунд</param>
         /// <returns>Значение в градусах</returns>
         protected readonly Func<double, double, double> DegToRad = (grad, min) => Math.PI * (grad + min / 60) / 180.0;
+        
+        /// <summary>
+        /// Преобразование радиан в градусы
+        /// </summary>
+        protected readonly Func<double, double> RadToDeg = (rad) => rad * 180 / Math.PI;
 
         #endregion
 

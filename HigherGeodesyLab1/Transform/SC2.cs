@@ -72,21 +72,22 @@ namespace HigherGeodesyLab1.Transform
         /// <summary>
         /// Долгота в системе координат Sc2
         /// </summary>
-        public double B { get; private set; }
+        public double B { get; set; }
 
         /// <summary>
         /// Широта в системе координат Sc2
         /// </summary>
-        public double L { get; private set; }
+        public double L { get; set; }
 
         /// <summary>
         /// Геодезическая высота в системе координат Sc2
         /// </summary>
-        public double H { get; private set; }
+        public double H { get; set; }
 
         private const double Scaledenominator = 10000000;
 
-        private double _d;
+        public double _d;
+        public double _r;
 
         #endregion
 
@@ -120,14 +121,14 @@ namespace HigherGeodesyLab1.Transform
         #region TransformMethods
 
         /// <summary>
-        /// Метод который преобразует координаты из системы SC1 в систему SC2
+        /// Преборазование прямоугольной системы координат СК1 в СК2 
         /// </summary>
         /// <param name="listSc1">коллекция с параметрами системы SC1</param>
         /// <param name="listParamsSc2">коллекция с параметрами системы SC2</param>
         public static void Sc1ToSc2(List<SC1> listSc1, List<SC2> listParamsSc2, List<Ellipsoid> listEllipsoid)
         {
 //            List<SC1> newlistSc1 = SelectSecond(listSc1);
-            List<Ellipsoid> newlistEllipsoid = SelectSecond(listEllipsoid);
+//            List<Ellipsoid> newlistEllipsoid = SelectSecond(listEllipsoid);
 
             MathMod.Matrix sc2Matrix = new MathMod.Matrix(3, 1);
             //|Xp|
@@ -147,7 +148,7 @@ namespace HigherGeodesyLab1.Transform
             //|deltaZo|
 
             IEnumerable<Tuple<SC1, SC2, Ellipsoid>> seq =
-                ZipCollections.MyZip(listSc1, listParamsSc2, newlistEllipsoid,
+                ZipCollections.MyZip(listSc1, listParamsSc2, listEllipsoid,
                     (first, second, third) => new Tuple<SC1, SC2, Ellipsoid>(first, second, third));
 
             foreach (var t in seq)
@@ -184,11 +185,13 @@ namespace HigherGeodesyLab1.Transform
                 t.Item2.Z = sc2Matrix.Matr[2, 0];
 
                 t.Item2._d = GetValueD(t.Item2.X, t.Item2.Y);
+//
+//                t.Item2.B = Iteration(t.Item2.X, t.Item2.Y, t.Item2.Z, t.Item3.PowE, t.Item3.A);
+//                t.Item2.L = GetValueL(t.Item2.Y, t.Item2._d);
+//                t.Item2.H = GetValueH(t.Item2._d, t.Item2.B, t.Item2.Z, t.Item3.A,
+//                    t.Item3.PowE);
 
-                t.Item2.B = Iteration(t.Item2.X, t.Item2.Y, t.Item2.Z, t.Item3.PowE, t.Item3.A);
-                t.Item2.L = GetValueL(t.Item2.Y, t.Item2._d);
-                t.Item2.H = GetValueH(t.Item2._d, t.Item2.B, t.Item2.Z, t.Item3.A,
-                    t.Item3.PowE);
+                DifferentTransform.GetBlhFromXyz(TransformType.Iterarion, listEllipsoid, listParamsSc2);
             }
         }
 

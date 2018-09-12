@@ -94,6 +94,11 @@ namespace HigherGeodesyLab1.Helper
 
         public static void ReadForXYZ(this List<SC1> dataList, string fileName)
         {
+            if (dataList.Count > 0)
+            {
+                dataList.Clear();
+            }
+            
             try
             {
                 using (var sr = new StreamReader(fileName))
@@ -169,13 +174,14 @@ namespace HigherGeodesyLab1.Helper
 
         public static void Save(this List<SC2> dataList, List<Ellipsoid> listEllipdoid, string fileName)
         {
-            List<Ellipsoid> newlistEllipsoid = new List<Ellipsoid>();
-            for (int i = 0; i < listEllipdoid.Count; i++)
-                if (i % 2 != 0)
-                    newlistEllipsoid.Add(listEllipdoid[i]);
+//            List<Ellipsoid> newlistEllipsoid = new List<Ellipsoid>();
+//            for (int i = 0; i < listEllipdoid.Count; i++)
+//                if (i % 2 != 0)
+//                    newlistEllipsoid.Add(listEllipdoid[i]);
 
-            IEnumerable<Tuple<SC2, Ellipsoid>> seq =
-                dataList.Zip(newlistEllipsoid, (sc1, sc2) => new Tuple<SC2, Ellipsoid>(sc1, sc2));
+            var seq = ZipCollections.MyZip(dataList, listEllipdoid,
+                (e, b) => new Tuple<SC2, Ellipsoid>(e, b));
+            
             using (var fs = new StreamWriter(fileName))
             {
                 foreach (var tuple in seq)

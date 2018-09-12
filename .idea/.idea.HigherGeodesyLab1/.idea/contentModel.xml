@@ -11,6 +11,7 @@
           <e p="GeneralFunctionality.cs" t="Include" />
           <e p="Matrix.cs" t="Include" />
           <e p="SaveRead.cs" t="Include" />
+          <e p="TransformType.cs" t="Include" />
           <e p="ZipCollections.cs" t="Include" />
         </e>
         <e p="HigherGeodesyLab1.csproj" t="IncludeRecursive" />
@@ -18,7 +19,9 @@
         <e p="obj" t="ExcludeRecursive" />
         <e p="Properties" t="Include" />
         <e p="Transform" t="Include">
+          <e p="DifferentTransform.cs" t="Include" />
           <e p="Elipsoid.cs" t="Include" />
+          <e p="GaussProjection.cs" t="Include" />
           <e p="SC1.cs" t="Include" />
           <e p="SC2.cs" t="Include" />
           <e p="SC2Expression.cs" t="Include" />
@@ -36,6 +39,7 @@
           <e p="AssemblyInfo.cs" t="Include" />
         </e>
         <e p="SC1Tests.cs" t="Include" />
+        <e p="TestGaussProjection.cs" t="Include" />
       </e>
       <e p="packages" t="ExcludeRecursive" />
     </e>

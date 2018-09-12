@@ -105,12 +105,8 @@ namespace HigherGeodesyLab1.Transform
         #region TransformMethods
 
         /// <summary>
-        /// Основной метод который преобразует значения долготы, широты и геодезической высоты из СК1 в СК2
+        /// Преобразование геодезической системы координат из СК1 в СК2
         /// </summary>
-        /// <param name="listEllipsoid"></param>
-        /// <param name="newlistSc1/param>
-        /// <param name="listSc2Matrix"></param>
-        /// <param name="listSc2Expression"></param>
         public static void Blh1ToBlh2(List<Ellipsoid> listEllipsoid, List<SC1> listSc1,
             List<SC2> listSc2Matrix, List<SC2Expression> listSc2Expression)
         {
@@ -151,6 +147,11 @@ namespace HigherGeodesyLab1.Transform
             }
         }
 
+        /// <summary>
+        /// Обратное преобразование.
+        /// Корректно работает данный метод, только в случае если подаваемые на вход параметры были
+        /// ранее преобразованы через метод <see cref="Blh1ToBlh2"/>>
+        /// </summary>
         public static void Blh2ToBlh1(List<Ellipsoid> listEllipsoid, List<SC1> listSc1,
             List<SC2> listSc2Matrix, List<SC2Expression> listSc2Expression)
         {

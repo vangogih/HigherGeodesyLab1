@@ -18,4 +18,6 @@ D:\RiderProjects\HigherGeodesyLab1\HigherGeodesyLab1Tests\bin\Debug\nunit.framew
 D:\RiderProjects\HigherGeodesyLab1\HigherGeodesyLab1Tests\bin\Debug\HigherGeodesyLab1.pdb
 D:\RiderProjects\HigherGeodesyLab1\HigherGeodesyLab1Tests\bin\Debug\MathMod.xml
 D:\RiderProjects\HigherGeodesyLab1\HigherGeodesyLab1Tests\bin\Debug\nunit.framework.xml
-D:\RiderProjects\HigherGeodesyLab1\HigherGeodesyLab1Tests\obj\Debug\HigherGeodesyLab1Tests.csprojResolveAssemblyReference.cache
+D:\RiderProjects\HigherGeodesyLab1\HigherGeodesyLab1Tests\obj\Debug\HigherGeodesyLab1Tests.csprojAssemblyReference.cache
+D:\RiderProjects\HigherGeodesyLab1\HigherGeodesyLab1Tests\obj\Debug\HigherGeodesyLab1Tests.csproj.CoreCompileInputs.cache
+D:\RiderProjects\HigherGeodesyLab1\HigherGeodesyLab1Tests\obj\Debug\HigherGeodesyLab1Tests.csproj.CopyComplete
